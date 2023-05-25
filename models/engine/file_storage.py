@@ -11,18 +11,19 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary or filtered list of models in storage"""
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
         else:
             filtered_objects = {}
-            for key, value in FileStorage.__objects.items():
-                class_name = key.split('.')[0]
-                if class_name == cls.__name__:
+            for key, value in self.__objects.items():
+                if type(value) == cls:
                     filtered_objects[key] = value
             return filtered_objects
 
     def new(self, obj):
         """Adds a new object to the storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
         """Saves the storage dictionary to a file"""
@@ -58,8 +59,11 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Deletes an object from the storage if it exists"""
+        """
+        deletes an object
+        object from storage
+        """
         if obj is not None:
-            key = obj.__class__.__name__ + '.' + obj.id
-            if key in FileStorage.__objects:
-                del FileStorage.__objects[key]
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            del self.__objects[key]
+            self.save()
