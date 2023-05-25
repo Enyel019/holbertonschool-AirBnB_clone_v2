@@ -11,10 +11,10 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary or filtered list of models in storage"""
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
         else:
             filtered_objects = {}
-            for key, value in FileStorage.__objects.items():
+            for key, value in self.__objects.items():
                 class_name = key.split('.')[0]
                 if class_name == cls.__name__:
                     filtered_objects[key] = value
@@ -26,9 +26,9 @@ class FileStorage:
 
     def save(self):
         """Saves the storage dictionary to a file"""
-        with open(FileStorage.__file_path, 'w') as f:
+        with open(self.__file_path, 'w') as f:
             temp = {}
-            temp.update(FileStorage.__objects)
+            temp.update(self.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
@@ -50,7 +50,7 @@ class FileStorage:
         }
         try:
             temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
+            with open(self.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
@@ -61,5 +61,5 @@ class FileStorage:
         """Deletes an object from the storage if it exists"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
-            if key in FileStorage.__objects:
-                del FileStorage.__objects[key]
+            if key in self.__objects:
+                del self.__objects[key]
