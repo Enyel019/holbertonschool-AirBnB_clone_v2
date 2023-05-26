@@ -1,12 +1,13 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
+"""Place Module for HBNB project."""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel, Base):
-    """ A place to stay """
+    """A place to stay."""
+
     __tablename__ = 'places'
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -19,4 +20,5 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    reviews = relationship('Review', cascade='all, delete-orphan', backref='place')
+    reviews = relationship(
+        'Review', cascade='all, delete-orphan', backref='place')
