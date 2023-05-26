@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This is the base model class for AirBnB"""
+"""This is the base model class for AirBnB."""
 import uuid
 import models
 from datetime import datetime
@@ -11,9 +11,9 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """This class will defines all common attributes/methods
-    for other classes
-    """
+    """This class will defines all common attributes/
+    methods for other classes."""
+
     id = Column(String(60), primary_key=True, nullable=False, unique=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
