@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+"""This module defines a class to manage file storage for hbnb clone."""
+
 from models.base_model import Base, BaseModel
 from os import getenv
 from sqlalchemy import create_engine
@@ -13,6 +14,7 @@ from models.review import Review
 
 
 class DBStorage:
+    """The class DBStorage is defined for database storage in Python."""
 
     __engine = None
     __session = None
