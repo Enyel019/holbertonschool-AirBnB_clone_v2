@@ -42,41 +42,22 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
+    reviews = relationship(
+        'Review', cascade='all, delete-orphan', backref='place')
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship("Review", cascade="all, delete, delete-orphan",
-                               backref="place")
-        amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False)
+    # For DBStorage
+    if models.storage_type == 'db':
+        reviews = relationship(
+            'Review', cascade='all, delete-orphan', backref='place')
+
+    # For FileStorage
     else:
         @property
         def reviews(self):
-            """
-            This function returns a list of reviews associated with a specific place ID.
-            :return: a list of all the reviews associated with the Place instance.
-            """
-
-            list_return = []
-            for key_, value_ in models.storage.all(Review).items():
-                if value_.place_id == self.id:
-                    list_return.append(value_)
-            return (list_return)
-
-        @property
-        def amenities(self):
-            """
-            This function returns a list of amenities associated with a place object.
-            :return: The method `amenities` returns a list of amenities associated with the current
-            instance of a Place object.
-            """
-
-            list_return = []
-            for key__, value__ in models.storage.all(Amenity).items():
-                if value__.place_id == self.id:
-                    list_return.append(value_)
-            return (list_return)
-
-        @amenities.setter
-        def amenities(self, value):
-            if 'Amenity' in value:
-                self.amenity_ids.append(value)
+            """Getter attribute that returns the list of Review instances
+            with place_id equals to the current Place.id"""
+            review_list = []
+            for review in models.storage.all(Review).values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
