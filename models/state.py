@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
-from models import storage
 import os
 
 
@@ -24,6 +23,8 @@ class State(BaseModel, Base):
             The function "cities" is not defined and therefore cannot be/
             summarized.
             """
+            from models import storage
+
             all_cities = storage.all(City)
             return [city for city in all_cities.values()
                     if city.state_id == self.id]
