@@ -50,14 +50,11 @@ class BaseModel:
         storage.delete(self)
 
     def to_dict(self):
-        """
-        The function "to_dict" is likely a method of a class in Python that/
-        returns a dictionary
-        representation of an object.
-        """
-        dict_copy = self.__dict__.copy()
-        dict_copy.pop("_sa_instance_state", None)
-        dict_copy["created_at"] = dict_copy["created_at"].isoformat()
-        dict_copy["updated_at"] = dict_copy["updated_at"].isoformat()
-        dict_copy["__class__"] = self.__class__.__name__
-        return dict_copy
+        """Convert instance into dict format"""
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        return dictionary

@@ -39,6 +39,13 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        """
+        This is a method definition in a Python class that takes an optional argument 'cls'.
+
+        :param cls: The `cls` parameter is a reference to a class. It is an optional parameter that can
+        be used to filter the objects returned by the `all` method. If `cls` is not `None`, the method
+        will only return objects that are instances of the specified class. If `cls`
+        """
         session = self.__session
         classes = [User, State, City, Amenity, Place, Review]
 
