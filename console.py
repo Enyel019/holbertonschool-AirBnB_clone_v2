@@ -116,40 +116,41 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, *args):
-        """Create a new instance of a specified class with given parameters/
-        and print its id."""
-        if not args:
+    def do_create(self, line):
+        """Creates a new instance of BaseModel, saves it
+        Exceptions:
+            SyntaxError: when there is no args given
+            NameError: when there is no object taht has the name
+        """
+        try:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            obj = eval("{}()".format(my_list[0]))
+
+            if len(my_list) > 1:
+                i = 1
+                for argu in my_list:
+                    if i != 1:
+                        args = argu.split("=")
+                        arg_edit = args[1].replace("_", " ")
+                        arg_final = arg_edit.replace("\"", "")
+
+                        if isinstance(arg_final, float):
+                            arg_final = float(args[1])
+                        elif isinstance(arg_final, int):
+                            arg_final = int(args[1])
+
+                        if hasattr(obj, args[0]):
+                            setattr(obj, args[0], arg_final)
+                    i += 1
+
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
             print("** class name missing **")
-            args_list = split(args)
-            class_name = args_list[0]
-            if class_name not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-
-            # Extracting parameters from the command #
-            parameters = {}
-            for param in args_list[1:]:
-                if '=' in param:
-                    key, value = param.split('=')
-                    key = key.strip()
-                    value = value.strip().replace('_', ' ')
-                    if value.startswith('"') and value.endswith('"'):
-                        value = value[1:-1].replace('\\"', '"')
-            else:
-                try:
-                    value = int(value)
-                except ValueError:
-                    try:
-                        value = float(value)
-                    except ValueError:
-                        pass
-
-            parameters[key] = value
-            """Creating the instance with given parameters."""
-            new_instance = HBNBCommand.classes[class_name](**parameters)
-            new_instance.save()
-            print(new_instance.id)
+        except NameError:
+            print("** class doesn't exist **")
 
     def help_create(self):
         """ Help information for the create method """
