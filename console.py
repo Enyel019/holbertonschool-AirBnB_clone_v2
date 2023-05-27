@@ -231,7 +231,6 @@ class HBNBCommand(cmd.Cmd):
 
         if os.environ.get ('HBNB_TYPE_STORAGE') == 'db':
             if args:
-
                 if args not in HBNBCommand.classes:
                     print("** class doesn't exist **")
                     return
@@ -244,7 +243,6 @@ class HBNBCommand(cmd.Cmd):
 
         else:
             if args:
-
                 if args not in HBNBCommand.classes:
                     print("** class doesn't exist **")
                     return
