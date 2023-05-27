@@ -71,12 +71,14 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """ reload  from
-        db to session """
+        """Reload  from
+        db to session."""
         Base.metadata.create_all(self.__engine)
         session = scoped_session(sessionmaker(bind=self.__engine,
                                               expire_on_commit=False))
         self.__session = session()
 
     def close(self):
+        """The function "close" is not defined and therefore cannot be summarized.
+        """
         self.__session.close()
