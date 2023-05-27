@@ -19,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
     """Contains the functionality for the HBNB console."""
 
     # determines prompt for interactive/non-interactive modes
-    prompt = '(hbnb) '
+    prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
         'BaseModel': BaseModel, 'User': User, 'Place': Place,
@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, ):
+    def do_create(self, *args):
         """Create a new instance of a specified class with given parameters/
         and print its id."""
         if not args:
