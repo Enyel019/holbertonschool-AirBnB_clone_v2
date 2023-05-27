@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone."""
 
-from models.base_model import Base, BaseModel
-from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from os import getenv
+from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.city import City
 from models.state import State
@@ -20,54 +20,78 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """Comment."""
-        db_user = getenv('HBNB_MYSQL_USER')
-        db_pass = getenv('HBNB_MYSQL_PWD')
-        db_host = getenv('HBNB_MYSQL_HOST')
-        db = getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'.
-                                      format(db_user, db_pass, db_host, db),
-                                      pool_pre_ping=True)
-        if getenv('HBNB_ENV') == 'test':
+        """
+        This is the constructor method for a Python class.
+        """
+        user = getenv('HBNB_MYSQL_USER')
+        password = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        database = getenv('HBNB_MYSQL_DB')
+        env = getenv('HBNB_ENV')
+
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(user,
+                                                 password, host, database),
+            pool_pre_ping=True
+        )
+
+        if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        def all(self, cls=None):
-            """Query on the current database session."""
-            classes = [User, State, City, Amenity, Place, Review]
-            dict_ = {}
+    def all(self, cls=None):
+        session = self.__session
+        classes = [User, State, City, Amenity, Place, Review]
 
-            if cls is None:
-                for cls in classes:
-                    objs = self.__session.query(cls).all()
-                    for obj in objs:
-                        key = '{}.{}'.format(obj.__class__.__name__, obj.id)
-                        dict_[key] = obj
-            else:
-                cls = eval(cls)
-                objs = self.__session.query(cls).all()
-                for obj in objs:
-                    key = '{}.{}'.format(obj.__class__.__name__, obj.id)
-                dict_[key] = obj
+        if cls:
+            query = session.query(cls).all()
+        else:
+            query = []
+            for cls in classes:
+                query += session.query(cls).all()
 
-            return dict_
+        objects = {}
+        for obj in query:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            objects[key] = obj
 
-        def new(self, obj):
-            """Add the object to the current database session."""
-            if obj:
-                self.__session.add(obj)
+        return objects
 
-        def save(self):
-            """Commit all changes of the current database session."""
-            self.__session.commit()
+    def new(self, obj):
+        """
+        The function "new" takes in an object as a parameter.
 
-        def delete(self, obj=None):
-            """Delete from the current database session."""
-            if obj:
-                self.__session.delete(obj)
+        :param obj: The "obj" parameter in the "new" method is typically used to create a new instance
+        of a class. It represents the object that is being created and initialized. The "self"
+        parameter, on the other hand, refers to the instance of the class that the method is being
+        called on
+        """
+        self.__session.add(obj)
 
-        def reload(self):
-            """Create all tables in the database."""
-            Base.metadata.create_all(self.__engine)
-            session = scoped_session(sessionmaker(bind=self.__engine,
-                                                  expire_on_commit=False))
-            self.__session = session()
+    def save(self):
+        """
+        The function "save" is defined, but its implementation is not shown.
+        """
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """
+        The function "delete" takes an optional argument "obj" and does not have any implementation
+        provided in the code snippet.
+
+        :param obj: The "obj" parameter in the "delete" method is an optional argument that represents
+        the object to be deleted. If no argument is provided, the method will delete the entire object
+        that the method is called on. If an argument is provided, the method will delete only that
+        specific object
+        """
+        if obj:
+            self.__session.delete(obj)
+
+    def reload(self):
+        """
+        The function "reload" is not defined and therefore cannot be summarized.
+        """
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
