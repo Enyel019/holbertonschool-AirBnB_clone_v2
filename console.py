@@ -121,19 +121,21 @@ class HBNBCommand(cmd.Cmd):
         and print its id."""
         if not args:
             print("** class name missing **")
-            args_list = shlex.split(args)
+            args_list = split(args)
             class_name = args_list[0]
             if class_name not in HBNBCommand.classes:
                 print("** class doesn't exist **")
- # Extracting parameters from the command #
-                parameters = {}
-                for param in args_list[1:]:
-                    if '=' in param:
-                        key, value = param.split('=')
-                        key = key.strip()
-                        value = value.strip().replace('_', ' ')
-                        if value.startswith('"') and value.endswith('"'):
-                            value = value[1:-1].replace('\\"', '"')
+                return
+
+            # Extracting parameters from the command #
+            parameters = {}
+            for param in args_list[1:]:
+                if '=' in param:
+                    key, value = param.split('=')
+                    key = key.strip()
+                    value = value.strip().replace('_', ' ')
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1].replace('\\"', '"')
             else:
                 try:
                     value = int(value)

@@ -11,7 +11,8 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """The above class is a base model that can be inherited by other classes."""
+    """The above class is a base model that can be inherited
+    by other classes."""
 
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
@@ -19,7 +20,8 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """
-        This is the constructor method for a Python class that takes any number of arguments and keyword
+        This is the constructor method for a Python class that takes any/
+        number of arguments and keyword
         arguments.
         """
         if kwargs:
@@ -49,7 +51,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-        The function "to_dict" is likely a method of a class in Python that returns a dictionary
+        The function "to_dict" is likely a method of a class in Python that/
+        returns a dictionary
         representation of an object.
         """
         dict_copy = self.__dict__.copy()

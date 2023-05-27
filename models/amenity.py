@@ -6,7 +6,8 @@ from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
-    """The Amenity class inherits from the BaseModel and Base classes in Python."""
+    """The Amenity class inherits from the BaseModel and Base/
+    classes in Python."""
 
     __tablename__ = 'amenities'
     name = Column(String(128), nullable=False)

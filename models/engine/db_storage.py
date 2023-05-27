@@ -75,20 +75,20 @@ class DBStorage:
 
     def delete(self, obj=None):
         """
-        The function "delete" takes an optional argument "obj" and does not have any implementation
-        provided in the code snippet.
+        This function deletes an object from a session in Python.
 
-        :param obj: The "obj" parameter in the "delete" method is an optional argument that represents
-        the object to be deleted. If no argument is provided, the method will delete the entire object
-        that the method is called on. If an argument is provided, the method will delete only that
-        specific object
+        :param obj: The "obj" parameter is an optional argument that represents the object to be deleted
+        from the database. If this parameter is not provided, the method will not do anything. If it is
+        provided, the method will use the SQLAlchemy session to delete the object from the database
         """
+
         if obj:
             self.__session.delete(obj)
 
     def reload(self):
         """
-        The function "reload" is not defined and therefore cannot be summarized.
+        The function "reload" is not defined and therefore cannot be/
+        summarized.
         """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
