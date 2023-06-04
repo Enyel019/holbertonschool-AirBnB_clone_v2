@@ -9,14 +9,14 @@ app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
 def hello():
-    """Function "hello" is defined but its implementation is missing."""
-    return 'Hello HBNB!'
+    """The function "hello" is defined but its implementation is missing."""
+    return "Hello HBNB!"
 
 
-@app.route("/", Strict_slashes=False)
+@app.route("/",  strict_slashes=False)
 def hello_hbnb():
-    """Function 'hello_hbnb()' is defined but has no code inside it."""
-    return 'HBNB'
+    """The function "hello_hbnb()" is defined but has no code inside it."""
+    return "HBNB"
 
 
 if __name__ == '__main__':
