@@ -12,6 +12,7 @@ def hello():
     """The function "hello" is defined but its implementation is missing."""
     return "Hello HBNB!"
 
+
 @app.route("/", Strict_slashes=False)
 def hello_hbnb():
     """The function "hello_hbnb()" is defined but has no code inside it."""
