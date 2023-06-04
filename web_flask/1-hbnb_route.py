@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Write a script that starts a Flask web application."""
 
 from flask import Flask
 
@@ -14,8 +15,6 @@ def hello():
 
 @app.route("/", Strict_slashes=False)
 def hello_hbnb():
-    """The function "hello_hbnb()" is defined but has no code inside it."""
-    
     return "HBNB"
 
 
