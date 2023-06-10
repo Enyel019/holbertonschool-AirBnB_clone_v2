@@ -25,7 +25,7 @@ def C_is_fun(text):
 
 @app.route("/python", strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
-def is_magic(text='is cool'):
+def python_is_cool(text='is cool'):
     """Is Function "is_magic" takes an optional."""
     return f"python {text.replace('_', ' ')}"
 
