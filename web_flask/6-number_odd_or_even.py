@@ -30,26 +30,26 @@ def c_is_fun(text):
 @app.route('/python')
 @app.route('/python/<text>')
 def python_is_cool(text='is cool'):
-    """Third route message."""
+    """Fourth route message."""
     return f"Python {text.replace('_', ' ')}"
 
 
 @app.route('/number/<int:n>')
 def python_is_int(n):
-    """Fourth route message."""
+    """Fifth route message."""
     return f'{n} is a number'
 
 
 @app.route('/number_template/<int:n>')
-def number_template(n):
-    """Fifth route message."""
+def first_render(n):
+    """Sixth route message."""
     return render_template('5-number.html', number=n)
 
 
 @app.route('/number_odd_or_even/<int:n>')
-def odd_or_even(n):
-    """Sixth route massage."""
-    return render_template('6-number_old_or_even.html', number=n)
+def odd_even(n):
+    """Seventh route message."""
+    return render_template('6-number_odd_or_even.html', number=n)
 
 
 if __name__ == '__main__':
