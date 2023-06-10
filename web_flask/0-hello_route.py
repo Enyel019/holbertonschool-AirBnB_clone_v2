@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
 def hello():
-    """Function "hello" is defined but its implementation is missing."""
+    """Is Function "hello" is defined but its implementation is missing."""
     return "Hello HBNB!"
 
 

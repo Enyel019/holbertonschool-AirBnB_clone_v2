@@ -1,26 +1,25 @@
 #!/usr/bin/python3
 """Write a script that starts a Flask web application."""
 
-from flask import Flask 
-
+from flask import Flask
 app = Flask(__name__)
 
 
 @app.route("/", strict_slashes=False)
 def hello():
-    """Function "hello()" is defined but its implementation is missing."""
+    """IS Function "hello" is defined but its implementation is missing."""
     return "Hello HBNB!"
 
 
 @app.route("/hbnb",  strict_slashes=False)
 def hbnb():
-    """Function "hbnb()" is defined but has no code inside it."""
+    """Is Function "hbnb" is defined but has no code inside it."""
     return "HBNB"
 
 
 @app.route("/c/<text>", strict_slashes=False)
 def C_is_fun(text):
-    """Function "C_func" takes a text input."""
+    """Is Function "C_func" takes a text input."""
     return f'C {text.replace("_", " ")}'
 
 
