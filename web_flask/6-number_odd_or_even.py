@@ -43,13 +43,13 @@ def python_is_int(n):
 @app.route('/number_template/<int:n>')
 def number_template(n):
     """Fifth route message."""
-    return render_template('5-number.html', n=n)
+    return render_template('5-number.html', number=n)
 
 
 @app.route('/number_odd_or_even/<int:n>')
-def odd_even(n):
+def odd_or_even(n):
     """Sixth route massage."""
-    return render_template('6-number_old_or_even.html', n=n)
+    return render_template('6-number_old_or_even.html', number=n)
 
 
 if __name__ == '__main__':
