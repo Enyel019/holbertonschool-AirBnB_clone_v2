@@ -1,33 +1,34 @@
 #!/usr/bin/python3
-"""Write a script that starts a Flask web application."""
-
 from flask import Flask
+
+
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route("/", strict_slashes=False)
+@app.route('/')
 def hello():
-    """Is Function "hello" is defined but its implementation is missing."""
-    return "Hello HBNB!"
+    """First route message."""
+    return 'Hello HBNB!'
 
 
-@app.route("/hbnb",  strict_slashes=False)
-def hbnb():
-    """Is Function "hbnb" is defined but has no code inside it."""
-    return "HBNB"
+@app.route('/hbnb')
+def hello_hbnb():
+    """Second route message."""
+    return 'HBNB'
 
 
-@app.route("/c/<text>", strict_slashes=False)
-def C_is_fun(text):
-    """Is Function "C_func" takes a text input."""
-    return f'C {text.replace("_", " ")}'
+@app.route('/c/<text>')
+def c_is_fun(text):
+    """Third route message."""
+    return f"C {text.replace('_', ' ')}"
 
 
-@app.route("/python", strict_slashes=False)
-@app.route("/python/<text>", strict_slashes=False)
+@app.route('/python')
+@app.route('/python/<text>')
 def python_is_cool(text='is cool'):
-    """Is Function "is_magic" takes an optional."""
-    return f"python {text.replace('_', ' ')}"
+    """Third route message."""
+    return f"Python {text.replace('_', ' ')}"
 
 
 if __name__ == '__main__':
