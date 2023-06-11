@@ -4,6 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
+from models import storage
+import models
 import os
 
 
@@ -16,13 +18,11 @@ class State(BaseModel, Base):
     if os.environ.get('HBNB_TYPE_STORAGE') != 'db':
         cities = relationship('City', cascade='all, delete', backref='states')
 
-    else:
         @property
         def cities(self):
-            """Is function "cities" is not defined and therefore cannot be\
-            summarized."""
-            from models import storage
-
-            all_cities = storage.all(City)
-            return [city for city in all_cities.values()
-                    if city.state_id == self.id]
+            final = []
+            city_list = models.storage.all(City)
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    final.append(city)
+            return final
