@@ -1,28 +1,30 @@
 #!/usr/bin/python3
-"""State Module for HBNB project."""
+"""This is the state class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from models.city import City
+import models
 import os
 
 
 class State(BaseModel, Base):
-    """State class."""
-
+    """This is the class for State
+    Attributes:
+        name: input name
+    """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
+    cities = relationship("City", cascade="all, delete, delete-orphan",
+                          backref="state")
 
     if os.environ.get('HBNB_TYPE_STORAGE') != 'db':
-        cities = relationship('City', cascade='all, delete', backref='states')
-
-    else:
         @property
         def cities(self):
-            """Is function "cities" is not defined and therefore cannot be\
-            summarized."""
-            from models import storage
-
-            all_cities = storage.all(City)
-            return [city for city in all_cities.values()
-                    if city.state_id == self.id]
+            final = []
+            city_list = models.storage.all(City)
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    final.append(city)
+            return final
+        
