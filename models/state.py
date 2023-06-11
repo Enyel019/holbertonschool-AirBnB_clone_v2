@@ -19,10 +19,8 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            """
-            The function "cities" is not defined and therefore cannot be/
-            summarized.
-            """
+            """Is function "cities" is not defined and therefore cannot be\
+            summarized."""
             from models import storage
 
             all_cities = storage.all(City)
