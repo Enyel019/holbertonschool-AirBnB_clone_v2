@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """New engine on db->storage."""
 
-from models.base_model import Base, BaseModel
+from models.base_model import Base
 from models.amenity import Amenity
 from models.review import Review
 from models.state import State
@@ -57,7 +57,7 @@ class DBStorage:
         return dict_
 
     def new(self, obj):
-        """Add object to currnet db session."""
+        """Add object to current db session."""
         self.__session.add(obj)
 
     def save(self):
@@ -77,6 +77,5 @@ class DBStorage:
         self.__session = session()
 
     def close(self):
-        """Is function "close" is not defined and therefore cannot be\
-        summarized."""
+        """Close the current session."""
         self.__session.close()
