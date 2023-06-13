@@ -11,34 +11,40 @@ app.url_map.strict_slashes = False
 
 @app.route('/states_list')
 def states_list():
-    """Is function "states_list" is not defined and\
-    therefore cannot be summarized."""
-    lis = storage.all("State").values()
-    return render_template('7-states_list.html', lis=lis)
+    """Render a template that displays a list of states."""
+    states = storage.all(State).values()
+    return render_template('7-states_list.html', states=states)
 
 
 @app.route('/cities_by_states')
 def cities_states():
-    """Is function "cities_states" is not defined and therefore\
-    cannot be summarized."""
-    st = storage.all('State').values()
-    return render_template('7-dump.html', st=st)
+    """Render a template that displays cities grouped by states."""
+    states = storage.all(State).values()
+    return render_template('7-dump.html', states=states)
 
 
 @app.route('/states/<string:id>')
-def cit_b_st(id):
-    """Is function "cit_b_st" takes an input parameter "id" and\
-    performs some action(s) which are not specified in the code provided."""
-    lis = storage.all('State')
-    state = lis[f"State.{id}"] if f"State.{id}" in lis else None
+def state_by_id(id):
+    """Render a template that displays a specific state by its ID."""
+    states = storage.all(State)
+    state = states.get(f'State.{id}')
     return render_template('9-states.html', state=state)
 
 
 @app.teardown_appcontext
-def shutdown_(self):
-    """Is function "shutdown_" is defined but its implementation\
-    is not provided."""
+def teardown_appcontext(exception):
+    """Close the current SQLAlchemy session."""
     storage.close()
+
+
+@app.route('/hbnb_filters')
+def hbnb_filters():
+    """Is function "hbnb_filters" is defined but its\
+    implementation is missing."""
+    amenities = storage.all('Amenity').values()
+    states = storage.all('State').values()
+    return render_template('10-hbnb_filters.html',
+                           states=states, amenities=amenities)
 
 
 if __name__ == '__main__':
