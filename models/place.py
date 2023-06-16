@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
+"""Place Module for HBNB project."""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
@@ -18,6 +18,7 @@ class Place(BaseModel, Base):
     """The class "Place" inherits from "BaseModel" and "Base"."""
 
     __tablename__ = 'places'
+    id = Column(String(60), primary_key=True, nullable=False)
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)

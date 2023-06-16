@@ -22,7 +22,7 @@ def cities_states():
     """Is function "cities_states" is not defined and therefore\
     cannot be summarized."""
     st = storage.all('State').values()
-    return render_template('7-dump.html', st=st)
+    return render_template('8-cities_by_states.html', st=st)
 
 
 @app.teardown_appcontext
