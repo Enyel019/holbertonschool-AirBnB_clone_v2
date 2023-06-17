@@ -13,7 +13,7 @@ app.url_map.strict_slashes = False
 def states_list():
     """Is function "states_list" is not defined and\
     therefore cannot be summarized."""
-    lis = storage.all("State").values()
+    lis = storage.all(State).values()
     return render_template('7-states_list.html', lis=lis)
 
 
@@ -21,7 +21,7 @@ def states_list():
 def cities_states():
     """Is function "cities_states" is not defined and therefore\
     cannot be summarized."""
-    st = storage.all('State').values()
+    st = storage.all(State).values()
     return render_template('8-cities_by_states.html', st=st)
 
 
