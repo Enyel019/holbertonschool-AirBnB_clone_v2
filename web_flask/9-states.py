@@ -1,40 +1,43 @@
 #!/usr/bin/python3
-"""
-Thi is favority modul
-"""
-from models import storage
+
 from flask import Flask, render_template
+from models import storage
 from models.state import State
 
+
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
-@app.route('/states')
+@app.route('/states_list', strict_slashes=False)
 def states_list():
-    """Render a template that displays a list of states."""
-    states = storage.all(State).values()
-    return render_template('7-states_list.html', states=states)
+    """Return a list of all states."""
+    state_li = storage.all(State).values()
+    return render_template('7-states_list.html', states=state_li)
 
 
-@app.route('/cities_by_states')
-def cities_states():
-    """Render a template that displays cities grouped by states."""
-    states = storage.all(State).values()
-    return render_template('8-cities_by_states.html', states=states)
+@app.route('/cities_by_states', strict_slashes=False)
+def cities_by_states():
+    """Return list of City objects."""
+    state_li = storage.all(State).values()
+    return render_template('8-cities_by_states.html', states=state_li)
 
 
-@app.route('/states/<string:id>')
-def cit_b_st(id):
-    """Render a template that displays a specific state and its cities."""
-    states = storage.all(State)
-    state = states.get(f"State.{id}")
-    return render_template('9-states.html', state=state)
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
+def states(id=None):
+    """Return list of City object."""
+    state_dic = storage.all(State)
+    state = None
+    for obj in state_dic.values():
+        if obj.id == id:
+            state = obj
+    return render_template('9-states.html', states=state_dic,
+                           id=id, state=state)
 
 
 @app.teardown_appcontext
-def shutdown_session(exception=None):
-    """Close the current SQLAlchemy session."""
+def teardown_appcontext(exception):
+    """Closese session."""
     storage.close()
 
 
