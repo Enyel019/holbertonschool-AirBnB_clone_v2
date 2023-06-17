@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module BaseModel practice."""
+"""Module BaseModel practic."""
 
 import uuid
 import models
@@ -12,15 +12,23 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """This class will defines all common attributes\
-    methods for other classes."""
-
+    """This class will defines all common attributes/methods
+    for other classes
+    """
     id = Column(String(60), primary_key=True, nullable=False, unique=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """Is instantiation of base model class."""
+        """Instantiation of base model class
+        Args:
+            args: it won't be used
+            kwargs: arguments for the constructor of the BaseModel
+        Attributes:
+            id: unique id generated
+            created_at: creation date
+            updated_at: updated date
+        """
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -38,22 +46,30 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.utcnow()
 
     def __str__(self):
-        """Return a string."""
+        """returns a string
+        Return:
+            returns a string of class name, id, and dictionary
+        """
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.to_dict())
 
     def __repr__(self):
-        """Return a string representation."""
+        """return a string representaion
+        """
         return self.__str__()
 
     def save(self):
-        """Update the public instance attribute updated_at to current."""
+        """updates the public instance attribute updated_at to current
+        """
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Create dictionary of the class  and returns in __dict__."""
+        """creates dictionary of the class  and returns
+        Return:
+            returns a dictionary of all the key values in __dict__
+        """
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
@@ -63,5 +79,8 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """Delete instance."""
+        """
+        deletes
+        instance
+        """
         models.storage.delete(self)
