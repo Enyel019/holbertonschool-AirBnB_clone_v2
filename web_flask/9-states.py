@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-"""Write a script that starts a Flask web application."""
 from models import storage
 from flask import Flask, render_template
 from models.state import State
@@ -24,10 +23,13 @@ def cities_states():
 
 
 @app.route('/states/<string:id>')
-def state_by_id(id):
-    """Render a template that displays a specific state by its ID."""
-    states = storage.all(State)
-    state = states.get(f'State.{id}')
+def cit_b_st(id):
+    """The function "cit_b_st" takes an input parameter the function."""
+    lis = storage.all('State')
+    if "State." + id in lis:
+        state = lis["State." + id]
+    else:
+        state = None
     return render_template('9-states.html', state=state)
 
 

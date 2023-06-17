@@ -2,13 +2,9 @@
 """This is the place class."""
 
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table, values
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from os import getenv
 from sqlalchemy.orm import relationship
-from models import storage
-import models
-from models.review import Review
-from models.amenity import Amenity, value
 
 
 place_amenity = Table('place_amenity', Base.metadata,
