@@ -4,7 +4,6 @@ from models import storage
 from flask import Flask, render_template
 from models.state import State
 
-
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
@@ -20,17 +19,13 @@ def states_list():
 def cities_states():
     """Render a template that displays cities grouped by states."""
     states = storage.all(State).values()
-    return render_template('7-dump.html', states=states)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.route('/states/<string:id>')
-def cit_b_st(id):
-    """The function "cit_b_st" takes an input parameter the function."""
-    lis = storage.all('State')
-    if "State." + id in lis:
-        state = lis["State." + id]
-    else:
-        state = None
+def show_state(id):
+    """Render a template that displays a specific state."""
+    state = storage.get(State, id)
     return render_template('9-states.html', state=state)
 
 
