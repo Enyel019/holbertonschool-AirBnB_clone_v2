@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-
+"""Write a script that starts a Flask web application."""
 from models import storage
 from flask import Flask, render_template
 from models.state import State
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -10,28 +11,36 @@ app.url_map.strict_slashes = False
 
 @app.route('/states_list')
 def states_list():
-    """Render a template that displays a list of states."""
-    states = storage.all(State).values()
-    return render_template('7-states_list.html', states=states)
+    """Is function "states_list" is not defined and\
+    therefore cannot be summarized."""
+    lis = storage.all(State).values()
+    return render_template('7-states_list.html', lis=lis)
 
 
 @app.route('/cities_by_states')
 def cities_states():
-    """Render a template that displays cities grouped by states."""
-    states = storage.all(State).values()
-    return render_template('8-cities_by_states.html', states=states)
+    """Is function "cities_states" is not defined and therefore\
+    cannot be summarized."""
+    st = storage.all(State).values()
+    return render_template('8-cities_by_states.html', st=st)
 
 
 @app.route('/states/<string:id>')
-def show_state(id):
-    """Render a template that displays a specific state."""
-    state = storage.get(State, id)
+def cit_b_st(id):
+    """The function "cit_b_st" takes an input parameter "id"."""
+
+    lis = storage.all('State')
+    if "State." + id in lis:
+        state = lis["State." + id]
+    else:
+        state = None
     return render_template('9-states.html', state=state)
 
 
 @app.teardown_appcontext
-def teardown_appcontext(exception):
-    """Close the current SQLAlchemy session."""
+def shutdown_(self):
+    """Is function "shutdown_" is defined but its implementation\
+    is not provided."""
     storage.close()
 
 
