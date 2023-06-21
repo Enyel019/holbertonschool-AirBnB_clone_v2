@@ -43,7 +43,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
     def test_method_BaseModel(self):
-        """chekcing if Basemodel have methods"""
+        """checking if Basemodel have methods"""
         self.assertTrue(hasattr(BaseModel, "__init__"))
         self.assertTrue(hasattr(BaseModel, "save"))
         self.assertTrue(hasattr(BaseModel, "to_dict"))
@@ -54,7 +54,7 @@ class TestBaseModel(unittest.TestCase):
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
                      "if it is different to db type_storage")
-    def test_save_BaesModel(self):
+    def test_save_BaseModel(self):
         """test if the save works"""
         self.base.save()
         self.assertNotEqual(self.base.created_at, self.base.updated_at)
