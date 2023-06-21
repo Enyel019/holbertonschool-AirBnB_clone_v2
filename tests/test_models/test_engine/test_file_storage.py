@@ -12,6 +12,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class TestFileStorage(unittest.TestCase):
@@ -90,6 +91,22 @@ class TestFileStorage(unittest.TestCase):
             for line in r:
                 self.assertEqual(line, "{}")
         self.assertIs(self.storage.reload(), None)
+
+    def setUp(self):
+        self.file_storage = storage.FileStorage()
+        self.file_storage.reload()
+
+    def tearDown(self):
+        self.file_storage.close()
+
+    def test_get_existing_object(self):
+        """Test retrieving an existing object using get()"""
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+
+        retrieved_state = self.file_storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
 
 
 if __name__ == "__main__":
