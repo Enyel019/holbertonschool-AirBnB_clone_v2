@@ -77,16 +77,6 @@ class DBStorage:
         Session = scoped_session(session_factory)
         self.__session = Session()
 
-    def get(self, cls, id):
-        """Is retrieve an object based on the class and its ID."""
-        objects = self.all(cls)
-        return next((obj for obj in objects.values() if obj.id == id), None)
-
-    def count(self, cls=None):
-        """Count the number of objects in storage matching the given class."""
-        objects = self.all(cls)
-        return len(objects)
-
     def close(self):
         """Close the database storage session."""
         if self.__session is not None:
